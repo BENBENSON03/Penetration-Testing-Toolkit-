@@ -1,0 +1,383 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pentest Toolkit - Security Testing Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <meta property="og:image" content="https://bolt.new/static/og_default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://bolt.new/static/og_default.png">
+</head>
+  <body>
+    <div id="app">
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+          </div>
+          <div class="logo-text">
+            <span class="logo-name">PentestKit</span>
+            <span class="logo-sub">Security Toolkit</span>
+          </div>
+          <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+
+        <nav class="sidebar-nav">
+          <button class="nav-item active" data-view="dashboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>Dashboard</span>
+          </button>
+          <button class="nav-item" data-view="port-scanner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <span>Port Scanner</span>
+          </button>
+          <button class="nav-item" data-view="header-checker">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+            <span>Header Checker</span>
+          </button>
+          <button class="nav-item" data-view="ssl-analyzer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span>SSL Analyzer</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="auth-notice">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span>Authorized testing only</span>
+          </div>
+        </div>
+      </aside>
+
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+      <!-- Main content -->
+      <main class="main">
+        <header class="topbar">
+          <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <h1 class="topbar-title" id="topbarTitle">Dashboard</h1>
+          <div class="topbar-actions">
+            <div class="status-pill">
+              <span class="status-dot"></span>
+              <span>System Ready</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="content">
+          <!-- DASHBOARD VIEW -->
+          <section class="view active" id="view-dashboard">
+            <div class="stat-grid">
+              <div class="stat-card">
+                <div class="stat-icon stat-blue">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </div>
+                <div class="stat-body">
+                  <span class="stat-label">Total Scans</span>
+                  <span class="stat-value" id="statTotalScans">0</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon stat-green">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+                <div class="stat-body">
+                  <span class="stat-label">Open Ports Detected</span>
+                  <span class="stat-value" id="statOpenPorts">0</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon stat-cyan">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                </div>
+                <div class="stat-body">
+                  <span class="stat-label">Headers Checked</span>
+                  <span class="stat-value" id="statHeadersChecked">0</span>
+                </div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon stat-amber">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                </div>
+                <div class="stat-body">
+                  <span class="stat-label">SSL Cert Status</span>
+                  <span class="stat-value stat-value-sm" id="statSslStatus">No data</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="dashboard-grid">
+              <div class="panel">
+                <div class="panel-header">
+                  <h2 class="panel-title">Security Summary</h2>
+                </div>
+                <div class="panel-body">
+                  <div class="security-score" id="securityScore">
+                    <div class="score-ring">
+                      <svg viewBox="0 0 120 120">
+                        <circle class="score-bg" cx="60" cy="60" r="52"/>
+                        <circle class="score-fill" id="scoreRingFill" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7"/>
+                      </svg>
+                      <div class="score-text">
+                        <span class="score-number" id="scoreNumber">—</span>
+                        <span class="score-grade" id="scoreGrade">N/A</span>
+                      </div>
+                    </div>
+                    <div class="score-breakdown" id="scoreBreakdown">
+                      <p class="score-empty">Run scans to generate a security score.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel">
+                <div class="panel-header">
+                  <h2 class="panel-title">Recent Activity</h2>
+                </div>
+                <div class="panel-body">
+                  <div class="activity-list" id="activityList">
+                    <p class="empty-state">No recent activity. Start a scan to see results here.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header">
+                <h2 class="panel-title">Threat Distribution</h2>
+              </div>
+              <div class="panel-body">
+                <div class="bar-chart" id="barChart">
+                  <div class="bar-row">
+                    <span class="bar-label">Open Ports</span>
+                    <div class="bar-track"><div class="bar-fill bar-green" id="barOpenPorts" style="width:0%"></div></div>
+                    <span class="bar-value" id="barOpenPortsVal">0</span>
+                  </div>
+                  <div class="bar-row">
+                    <span class="bar-label">Missing Headers</span>
+                    <div class="bar-track"><div class="bar-fill bar-red" id="barMissingHeaders" style="width:0%"></div></div>
+                    <span class="bar-value" id="barMissingHeadersVal">0</span>
+                  </div>
+                  <div class="bar-row">
+                    <span class="bar-label">Present Headers</span>
+                    <div class="bar-track"><div class="bar-fill bar-cyan" id="barPresentHeaders" style="width:0%"></div></div>
+                    <span class="bar-value" id="barPresentHeadersVal">0</span>
+                  </div>
+                  <div class="bar-row">
+                    <span class="bar-label">SSL Issues</span>
+                    <div class="bar-track"><div class="bar-fill bar-amber" id="barSslIssues" style="width:0%"></div></div>
+                    <span class="bar-value" id="barSslIssuesVal">0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- PORT SCANNER VIEW -->
+          <section class="view" id="view-port-scanner">
+            <div class="auth-banner">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span>Port scanning should only be performed on systems you are authorized to test. Unauthorized scanning is illegal.</span>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header">
+                <h2 class="panel-title">Port Scanner</h2>
+              </div>
+              <div class="panel-body">
+                <form class="scan-form" id="portScanForm">
+                  <div class="form-row">
+                    <div class="form-group form-grow">
+                      <label for="portTarget">Target Hostname / IP</label>
+                      <input type="text" id="portTarget" placeholder="example.com or 192.168.1.1" autocomplete="off" />
+                    </div>
+                    <div class="form-group">
+                      <label for="portRange">Port Selection</label>
+                      <select id="portRange">
+                        <option value="common">Common Ports (1-1024)</option>
+                        <option value="top20">Top 20 Ports</option>
+                        <option value="custom">Custom Range</option>
+                      </select>
+                    </div>
+                    <div class="form-group form-custom-range" id="customRangeGroup" style="display:none">
+                      <label for="portStart">Custom Range</label>
+                      <div class="range-inputs">
+                        <input type="number" id="portStart" placeholder="1" min="1" max="65535" />
+                        <span class="range-sep">to</span>
+                        <input type="number" id="portEnd" placeholder="1024" min="1" max="65535" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="portScanBtn">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                      Start Scan
+                    </button>
+                    <button type="button" class="btn btn-ghost" id="portCancelBtn" disabled>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12"/></svg>
+                      Cancel
+                    </button>
+                    <button type="button" class="btn btn-ghost" id="portResetBtn">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                      Reset
+                    </button>
+                  </div>
+                </form>
+
+                <div class="scan-progress" id="portProgress" style="display:none">
+                  <div class="progress-info">
+                    <span id="portProgressLabel">Scanning...</span>
+                    <span id="portProgressPct">0%</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-fill" id="portProgressFill" style="width:0%"></div>
+                  </div>
+                </div>
+
+                <div class="results-area" id="portResults" style="display:none">
+                  <div class="results-header">
+                    <h3>Scan Results</h3>
+                    <div class="results-summary" id="portResultsSummary"></div>
+                  </div>
+                  <div class="table-wrap">
+                    <table class="results-table">
+                      <thead>
+                        <tr>
+                          <th>Port</th>
+                          <th>Protocol</th>
+                          <th>Service</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody id="portResultsBody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- HEADER CHECKER VIEW -->
+          <section class="view" id="view-header-checker">
+            <div class="auth-banner">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span>Header inspection should only be performed on websites you are authorized to test. Browser CORS restrictions may limit some checks.</span>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header">
+                <h2 class="panel-title">Security Header Checker</h2>
+              </div>
+              <div class="panel-body">
+                <form class="scan-form" id="headerForm">
+                  <div class="form-row">
+                    <div class="form-group form-grow">
+                      <label for="headerTarget">Website URL</label>
+                      <input type="text" id="headerTarget" placeholder="https://example.com" autocomplete="off" />
+                    </div>
+                  </div>
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="headerCheckBtn">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                      Check Headers
+                    </button>
+                    <button type="button" class="btn btn-ghost" id="headerResetBtn">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                      Reset
+                    </button>
+                  </div>
+                </form>
+
+                <div class="scan-progress" id="headerProgress" style="display:none">
+                  <div class="progress-info">
+                    <span>Analyzing security headers...</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-fill" id="headerProgressFill" style="width:0%"></div>
+                  </div>
+                </div>
+
+                <div class="results-area" id="headerResults" style="display:none">
+                  <div class="results-header">
+                    <h3>Header Analysis</h3>
+                    <div class="results-summary" id="headerResultsSummary"></div>
+                  </div>
+                  <div class="header-results-grid" id="headerResultsGrid"></div>
+
+                  <div class="recommendations" id="headerRecommendations"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SSL ANALYZER VIEW -->
+          <section class="view" id="view-ssl-analyzer">
+            <div class="auth-banner">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span>SSL/TLS certificate inspection should only be performed on domains you are authorized to test. Browser limitations may require an external API for full details.</span>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header">
+                <h2 class="panel-title">SSL Certificate Analyzer</h2>
+              </div>
+              <div class="panel-body">
+                <form class="scan-form" id="sslForm">
+                  <div class="form-row">
+                    <div class="form-group form-grow">
+                      <label for="sslTarget">Domain Name</label>
+                      <input type="text" id="sslTarget" placeholder="example.com" autocomplete="off" />
+                    </div>
+                  </div>
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="sslCheckBtn">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                      Analyze Certificate
+                    </button>
+                    <button type="button" class="btn btn-ghost" id="sslResetBtn">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                      Reset
+                    </button>
+                  </div>
+                </form>
+
+                <div class="scan-progress" id="sslProgress" style="display:none">
+                  <div class="progress-info">
+                    <span>Retrieving certificate information...</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-fill" id="sslProgressFill" style="width:0%"></div>
+                  </div>
+                </div>
+
+                <div class="results-area" id="sslResults" style="display:none">
+                  <div class="cert-status-banner" id="certStatusBanner"></div>
+                  <div class="cert-grid">
+                    <div class="cert-validity-card" id="certValidityCard"></div>
+                    <div class="cert-details" id="certDetails"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <!-- Toast container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
